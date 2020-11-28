@@ -1,31 +1,20 @@
 version: "3"
 services:
-  backend-postgrest:
-    container_name: backend-postgrest
-    image: postgrest/postgrest
-    depends_on:
-      - storage-postgres
-    ports:
-      - "${BACKEND_POSTGREST_PORT}:3000"
-    expose:
-      - ${BACKEND_POSTGREST_PORT}
+  backend-gateway:
+    container_name: backend-gateway
+    build:
+      context: ./backend
+      dockerfile: ./Dockerfile.dev
     environment:
-      PGRST_DB_URI: ${STORAGE_POSTGRES_URL}
-      PGRST_DB_SCHEMA: ${STORAGE_POSTGRES_DB}
-      PGRST_DB_ANON_ROLE: ${STORAGE_POSTGRES_ROLE_ANON}
-      PGRST_JWT_SECRET: ${PGREST_JWT_SECRET}
-      PGRST_PRE_REQUEST: ${PGREST_PRE_REQUEST}
-  
-  backend-postgrest-swagger:
-    image: swaggerapi/swagger-ui
-    depends_on:
-      - backend-postgrest
+      STORAGE_POSTGRES_URL: ${STORAGE_POSTGRES_URL}
     ports:
-      - "3001:8080"
+      - "${BACKEND_GATEWAY_PORT}:${BACKEND_GATEWAY_PORT}"
     expose:
-      - "3001"
-    environment:
-      API_URL: http://localhost:${BACKEND_POSTGREST_PORT}/
+      - ${BACKEND_GATEWAY_PORT}
+    volumes:
+      - "$PWD/backend:/app"
+    networks:
+      - network-badgerrr
   
   storage-postgres:
     container_name: storage-postgres
@@ -40,3 +29,8 @@ services:
       - "$PWD/dockerdata/postgres-data:/var/lib/postgresql/data"
       - "$PWD/dockerdata/postgres:/var/lib/postgres"
       - "$PWD/storage/postgres-init:/docker-entrypoint-initdb.d"
+    networks:
+      - network-badgerrr
+
+networks:
+  network-badgerrr:
