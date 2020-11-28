@@ -7,8 +7,6 @@ import * as compression from 'compression';
 import postgraphile from 'postgraphile';
 
 async function bootstrap() {
-  console.log(JSON.stringify(config));
-
   const app = await NestFactory.create(AppModule);
 
   if (config.api.useSwagger) {
