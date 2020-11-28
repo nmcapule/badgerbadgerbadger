@@ -25,6 +25,9 @@ export default {
       watchPg: true,
       graphiql: true,
       enhanceGraphiql: true,
+      pgDefaultRole: 'web_anon',
+      jwtPgTypeIdentifier: `${process.env.POSTGRAPHILE_SCHEMA}.jwt_token`,
+      jwtSecret: process.env.POSTGRAPHILE_JWT_SECRET,
     } as PostGraphileOptions,
   },
 };
