@@ -4,9 +4,10 @@
 -- Setup web_anon login
 CREATE role web_anon nologin;
 GRANT USAGE ON schema api TO web_anon;
-GRANT SELECT ON api.badges TO web_anon;
+GRANT SELECT, INSERT ON api.badges TO web_anon;
+GRANT SELECT, INSERT ON api.badge_grants TO web_anon;
 GRANT SELECT ON api.users TO web_anon;
-GRANT SELECT ON api.badge_grants TO web_anon;
+GRANT USAGE, SELECT ON sequence api.badges_id_seq TO web_anon;
 
 -- Setup web_anon auth
 CREATE role authenticator noinherit login PASSWORD 'mysecretpassword';
