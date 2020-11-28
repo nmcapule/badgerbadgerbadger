@@ -1,4 +1,5 @@
 import * as dotenv from 'dotenv';
+import { PostGraphileOptions } from 'postgraphile';
 
 dotenv.config({ path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env' });
 
@@ -19,11 +20,11 @@ export default {
 
   postgraphile: {
     url: process.env.STORAGE_POSTGRES_URL,
-    schema: 'api',
+    schema: process.env.POSTGRAPHILE_SCHEMA,
     options: {
       watchPg: true,
       graphiql: true,
       enhanceGraphiql: true,
-    },
+    } as PostGraphileOptions,
   },
 };

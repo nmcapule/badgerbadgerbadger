@@ -7,6 +7,7 @@ services:
       dockerfile: ./Dockerfile.dev
     environment:
       STORAGE_POSTGRES_URL: ${STORAGE_POSTGRES_URL}
+      POSTGRAPHILE_SCHEMA: ${POSTGRAPHILE_SCHEMA}
     ports:
       - "${BACKEND_GATEWAY_PORT}:${BACKEND_GATEWAY_PORT}"
     expose:
