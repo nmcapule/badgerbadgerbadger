@@ -1,12 +1,23 @@
 -- Setup 'api' schema
 CREATE schema api;
--- Initial tables
-CREATE TABLE api.todos (
+
+-- Users
+CREATE TABLE api.users (
     id serial PRIMARY KEY,
-    done boolean NOT NULL DEFAULT false,
-    task text NOT NULL,
-    due timestamptz
+    email text NOT NULL UNIQUE,
+    name text NOT NULL,
+    password_sha text NOT NULL,
+    password_salt text NOT NULL,
+    verified boolean NOT NULL DEFAULT false
 );
-INSERT INTO api.todos (task)
-VALUES ('finish tutorial 0'),
-    ('pat self on back');
+-- Badges
+CREATE TABLE api.badges (
+    id serial PRIMARY KEY,
+    name text NOT NULL,
+    description text,
+    image_url text
+);
+INSERT INTO api.badges (name, description, image_url)
+VALUES
+    ('best programmer', 'yes you are', ''),
+    ('best girlfrend', 'woohoo!', '');
