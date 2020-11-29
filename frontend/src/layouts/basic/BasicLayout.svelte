@@ -51,6 +51,7 @@
   <div class="header">
     <div class="bar d-flex align-items-center justify-content-end">
       <a href="/login" type="button" class="btn btn-link">Login</a>
+      <a href="/badges" type="button" class="btn btn-link">Badges</a>
     </div>
 
     <div class="title d-flex justify-content-between">
