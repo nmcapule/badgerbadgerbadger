@@ -28,10 +28,9 @@ CREATE INDEX ON api.badge_grants (granted_to);
 -- Badge Permissions
 CREATE TABLE api.badge_permissions (
     badge_id int NOT NULL REFERENCES api.badges(id),
-    user_id int REFERENCES api.accounts(id),
-    can_read boolean NOT NULL DEFAULT true,
+    account_id int REFERENCES api.accounts(id),
     can_edit boolean NOT NULL DEFAULT false,
     can_grant boolean NOT NULL DEFAULT false
 );
 CREATE INDEX ON api.badge_permissions (badge_id);
-CREATE INDEX ON api.badge_permissions (user_id);
+CREATE INDEX ON api.badge_permissions (account_id);

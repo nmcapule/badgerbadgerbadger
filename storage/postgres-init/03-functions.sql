@@ -12,7 +12,7 @@ DECLARE
 BEGIN
     SELECT u.* INTO account
         FROM api_private.accounts AS u
-        WHERE u.email = authenticate.email;
+        WHERE u.email = authenticate_account.email;
     
     IF account.password_hash = crypt(password, account.password_hash) THEN
         RETURN (
