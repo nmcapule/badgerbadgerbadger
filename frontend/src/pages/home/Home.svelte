@@ -52,7 +52,7 @@
   }
 </style>
 
-<BasicLayout>
+<BasicLayout hideHeader={true}>
   <div slot="title" class="flex-fill">
     {#if badger}
       <marquee><span class="clickable" on:click={() => (badger = false)}>🦡🦡🦡</span></marquee>

@@ -1,4 +1,5 @@
 <script lang="ts">
+  export let hideHeader = false;
 </script>
 
 <style lang="scss">
@@ -49,10 +50,12 @@
 
 <div class="layout-container d-flex flex-column">
   <div class="header">
-    <div class="bar d-flex align-items-center justify-content-end">
-      <a href="/login" type="button" class="btn btn-link">Login</a>
-      <a href="/badges" type="button" class="btn btn-link">Badges</a>
-    </div>
+    {#if !hideHeader}
+      <div class="bar d-flex align-items-center justify-content-end">
+        <a href="/login" type="button" class="btn btn-link">Login</a>
+        <a href="/badges" type="button" class="btn btn-link">Badges</a>
+      </div>
+    {/if}
 
     <div class="title d-flex justify-content-between">
       <slot name="title" />
