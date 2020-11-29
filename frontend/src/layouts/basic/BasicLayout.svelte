@@ -21,14 +21,13 @@
     > .header {
       padding-top: 0;
       padding-bottom: 0;
-      background-color: var(--color-smoke);
 
-      > .bar {
+      .bar {
         min-height: 3em;
       }
 
       > .title {
-        font-size: 2em;
+        font-size: 1.5em;
         padding-top: 1em;
       }
     }
@@ -51,8 +50,9 @@
 <div class="layout-container d-flex flex-column">
   <div class="header">
     <div class="bar d-flex align-items-center justify-content-end">
-      <button type="button" class="btn btn-link">Login</button>
+      <a href="/login" type="button" class="btn btn-link">Login</a>
     </div>
+
     <div class="title d-flex justify-content-between">
       <slot name="title" />
       <slot name="actions" />
