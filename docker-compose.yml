@@ -5,6 +5,8 @@ services:
     build:
       context: ./backend
       dockerfile: ./Dockerfile.dev
+    depends_on:
+      - storage-postgres
     environment:
       STORAGE_POSTGRES_URL: ${STORAGE_POSTGRES_URL}
       POSTGRAPHILE_SCHEMA: ${POSTGRAPHILE_SCHEMA}
@@ -33,6 +35,23 @@ services:
       - "$PWD/storage/postgres-init:/docker-entrypoint-initdb.d"
     networks:
       - network-badgerrr
+  
+  frontend:
+    container_name: frontend
+    build:
+      context: ./frontend
+      dockerfile: ./Dockerfile.dev
+    ports:
+      - "5000:5000"
+      - "35729:35729"
+    expose:
+      - 5000
+      - 35729
+    volumes:
+      - $PWD/frontend:/app
+    networks:
+      - network-badgerrr
+
 
 networks:
   network-badgerrr:
