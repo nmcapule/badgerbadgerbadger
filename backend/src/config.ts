@@ -28,6 +28,8 @@ export default {
       pgDefaultRole: process.env.POSTGRAPHILE_DEFAULT_ROLE,
       jwtPgTypeIdentifier: process.env.POSTGRAPHILE_JWT_TOKEN_ID,
       jwtSecret: process.env.POSTGRAPHILE_JWT_SECRET,
+      simpleCollections: 'only',
+      enableCors: true,
     } as PostGraphileOptions,
   },
 };
