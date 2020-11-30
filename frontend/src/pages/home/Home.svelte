@@ -1,5 +1,20 @@
 <script lang="ts">
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
+  import { operationStore, query } from '@urql/svelte';
+  const accounts = operationStore(`
+    query {
+      allAccounts {
+        edges {
+          node {
+            id
+            name
+            profile
+          }
+        }
+      }
+    }
+  `);
+  query(accounts);
 
   let badger = true;
 
