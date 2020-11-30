@@ -7,6 +7,7 @@ WORKDIR /app
 COPY package*.json ./
 
 RUN npm install
+# RUN npm run generate:graphql
 
 EXPOSE 5000
 EXPOSE 35729

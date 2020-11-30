@@ -5,9 +5,14 @@
     "build": "rollup -c",
     "start": "sirv public -s --host 0.0.0.0",
     "start:dev": "rollup -c -w",
-    "validate": "svelte-check"
+    "validate": "svelte-check",
+    "generate:graphql": "graphql-codegen --config codegen.yml"
   },
   "devDependencies": {
+    "@graphql-codegen/cli": "1.19.4",
+    "@graphql-codegen/introspection": "1.18.1",
+    "@graphql-codegen/typescript": "1.19.0",
+    "@graphql-codegen/typescript-urql": "^2.0.3",
     "@rollup/plugin-commonjs": "^14.0.0",
     "@rollup/plugin-node-resolve": "^8.0.0",
     "@rollup/plugin-replace": "^2.3.4",

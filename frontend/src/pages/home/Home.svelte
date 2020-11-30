@@ -1,6 +1,7 @@
 <script lang="ts">
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
   import { mutation, operationStore } from '@urql/svelte';
+  import type { Mutation } from '../../generated/graphql';
 
   const QUERY = `
     mutation {
@@ -9,7 +10,7 @@
         jwtToken
       }
     }`;
-  const authenticate = mutation(operationStore(QUERY));
+  const authenticate = mutation<Mutation>(operationStore(QUERY));
 
   let badger = true;
 
