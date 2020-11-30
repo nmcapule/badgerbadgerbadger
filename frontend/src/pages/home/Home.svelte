@@ -1,23 +1,36 @@
 <script lang="ts">
-  import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
   import { mutation, operationStore } from '@urql/svelte';
-  import type { Mutation } from '../../generated/graphql';
+  import { navigate } from 'svelte-routing';
+
+  import type { AuthenticateAccountInput, Mutation } from '../../generated/graphql';
+  import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
 
   const QUERY = `
-    mutation {
-      authenticateAccount(input: {email: "nmcapule@gmail.com", password: "hello"}) {
+    mutation ($email: String!, $password: String!) {
+      authenticateAccount(input: {email: $email, password: $password}) {
         clientMutationId
         jwtToken
       }
     }`;
-  const authenticate = mutation<Mutation>(operationStore(QUERY));
+  const authenticate = mutation<Mutation, AuthenticateAccountInput>(operationStore(QUERY));
 
   let badger = true;
+  let email = '';
+  let password = '';
 
   async function submit(e: Event) {
     e.preventDefault();
-    const response = await authenticate();
-    console.log(response.data.authenticateAccount.jwtToken);
+
+    const response = await authenticate({ email, password });
+
+    const token = response.data?.authenticateAccount?.jwtToken;
+    if (!token) {
+      window.alert('invalid credentials hey');
+      return;
+    }
+
+    console.log(token);
+    navigate('/badges', { replace: true });
   }
 </script>
 
@@ -86,10 +99,19 @@
       <div class="big">Login or Register</div>
       <form class="d-flex flex-column align-items-end" on:submit={submit}>
         <div class="form-group align-self-stretch">
-          <input type="email" class="form-control" placeholder="Enter email" autofocus />
+          <input
+            type="email"
+            bind:value={email}
+            class="form-control"
+            placeholder="Enter email"
+            autofocus />
         </div>
         <div class="form-group align-self-stretch">
-          <input type="password" class="form-control" placeholder="Password" />
+          <input
+            type="password"
+            bind:value={password}
+            class="form-control"
+            placeholder="Password" />
         </div>
         <div>
           <button type="button" class="btn btn-secondary">Register</button>
