@@ -1,27 +1,22 @@
 <script lang="ts">
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
-  import { operationStore, query } from '@urql/svelte';
-  const accounts = operationStore(`
-    query {
-      allAccounts {
-        edges {
-          node {
-            id
-            name
-            profile
-          }
-        }
+  import { mutation, operationStore } from '@urql/svelte';
+
+  const QUERY = `
+    mutation {
+      authenticateAccount(input: {email: "nmcapule@gmail.com", password: "hello"}) {
+        clientMutationId
+        jwtToken
       }
-    }
-  `);
-  query(accounts);
+    }`;
+  const authenticate = mutation(operationStore(QUERY));
 
   let badger = true;
 
-  function submit(e: Event) {
-    console.log(e);
-
+  async function submit(e: Event) {
     e.preventDefault();
+    const response = await authenticate();
+    console.log(response.data.authenticateAccount.jwtToken);
   }
 </script>
 
