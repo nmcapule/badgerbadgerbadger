@@ -45,6 +45,15 @@
     margin: 2px;
     background-color: var(--color-snow);
   }
+
+  @media only screen and (max-width: 800px) {
+    .item-badge {
+      font-size: 32px;
+      width: 64px;
+      height: 64px;
+      line-height: 64px;
+    }
+  }
 </style>
 
 <BasicLayout>

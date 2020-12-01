@@ -52,8 +52,8 @@
   <div class="header">
     {#if !hideHeader}
       <div class="bar d-flex align-items-center justify-content-end">
-        <a href="/login" type="button" class="btn btn-link">Login</a>
         <a href="/badges" type="button" class="btn btn-link">Badges</a>
+        <a href="/login" type="button" class="btn btn-link">Login</a>
       </div>
     {/if}
 
