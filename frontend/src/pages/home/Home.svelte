@@ -1,36 +1,25 @@
 <script lang="ts">
-  import { mutation, operationStore } from '@urql/svelte';
   import { navigate } from 'svelte-routing';
 
-  import type { AuthenticateAccountInput, Mutation } from '../../generated/graphql';
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
+  import { createAuthenticator, login } from '../../utils/auth';
 
-  const QUERY = `
-    mutation ($email: String!, $password: String!) {
-      authenticateAccount(input: {email: $email, password: $password}) {
-        clientMutationId
-        jwtToken
-      }
-    }`;
-  const authenticate = mutation<Mutation, AuthenticateAccountInput>(operationStore(QUERY));
+  const authenticate = createAuthenticator();
 
   let badger = true;
   let email = '';
   let password = '';
+  let error = '';
 
   async function submit(e: Event) {
     e.preventDefault();
 
-    const response = await authenticate({ email, password });
-
-    const token = response.data?.authenticateAccount?.jwtToken;
-    if (!token) {
-      window.alert('invalid credentials hey');
-      return;
+    try {
+      await login(email, password, authenticate);
+      navigate('/badges', { replace: true });
+    } catch (e) {
+      error = e;
     }
-
-    console.log(token);
-    navigate('/badges', { replace: true });
   }
 </script>
 
@@ -113,6 +102,11 @@
             class="form-control"
             placeholder="Password" />
         </div>
+        {#if error}
+          <div class="form-group align-self-stretch">
+            <div class="alert alert-danger" role="alert">{error}</div>
+          </div>
+        {/if}
         <div>
           <button type="button" class="btn btn-secondary">Register</button>
           <button type="submit" class="btn btn-primary">Submit</button>

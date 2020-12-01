@@ -1,5 +1,17 @@
 <script lang="ts">
+  import { operationStore, query } from '@urql/svelte';
+
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
+
+  const accounts = operationStore(`{
+    currentAccount {
+      id
+      name
+      nodeId
+      profile
+    }
+  }`);
+  query(accounts).subscribe((response) => console.log(response.data));
 
   const emojis = [
     { title: 'test', imageUrl: null, asText: '☀' },
