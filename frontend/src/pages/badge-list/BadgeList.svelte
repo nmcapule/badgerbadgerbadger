@@ -7,8 +7,8 @@
     currentAccount {
       id
       name
-      nodeId
       profile
+      email
     }
   }`);
   query(accounts).subscribe((response) => console.log(response.data));

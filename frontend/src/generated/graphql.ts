@@ -43,7 +43,7 @@ export type Query = Node & {
   allBadgesList?: Maybe<Array<Badge>>;
   accountById?: Maybe<Account>;
   badgeById?: Maybe<Badge>;
-  currentAccount?: Maybe<Account>;
+  currentAccount?: Maybe<CurrentAccountRecord>;
   /** Reads a single `Account` using its globally unique `ID`. */
   account?: Maybe<Account>;
   /** Reads a single `Badge` using its globally unique `ID`. */
@@ -327,6 +327,15 @@ export type BadgeCondition = {
   imageUrl?: Maybe<Scalars['String']>;
   /** Checks for equality with the object’s `fallbackText` field. */
   fallbackText?: Maybe<Scalars['String']>;
+};
+
+/** The return type of our `currentAccount` query. */
+export type CurrentAccountRecord = {
+  __typename?: 'CurrentAccountRecord';
+  id?: Maybe<Scalars['Int']>;
+  name?: Maybe<Scalars['String']>;
+  profile?: Maybe<Scalars['String']>;
+  email?: Maybe<Scalars['String']>;
 };
 
 /** The root mutation type which contains root level fields which mutate data. */

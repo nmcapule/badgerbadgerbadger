@@ -27,6 +27,7 @@ GRANT SELECT ON TABLE api.accounts TO web_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE api.badges TO web_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE api.badge_grants TO web_user;
 GRANT SELECT, INSERT, UPDATE, DELETE ON TABLE api.badge_permissions TO web_user;
+GRANT SELECT ON TABLE api_private.accounts TO web_user;
 
 -- Setup role-level security
 ALTER TABLE api.accounts ENABLE ROW LEVEL SECURITY;

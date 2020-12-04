@@ -1,4 +1,25 @@
 <script lang="ts">
+  import { operationStore, query } from '@urql/svelte';
+  import { MD5 } from 'crypto-js';
+
+  const account = query(
+    operationStore(`{
+      currentAccount {
+        id
+        name
+        profile
+        email
+      }
+    }`),
+  );
+
+  function gravatarUrl(email: string): string {
+    if (!email) return '';
+
+    const hash = MD5(email?.toLowerCase().trim());
+    return `http://gravatar.com/avatar/${hash}`;
+  }
+
   export let hideHeader = false;
 </script>
 
@@ -46,6 +67,14 @@
       }
     }
   }
+
+  .gravatar {
+    margin: 0.5em;
+    width: 3em;
+    height: 3em;
+    border: 1px solid var(--color-smoke);
+    border-radius: 3em;
+  }
 </style>
 
 <div class="layout-container d-flex flex-column">
@@ -54,6 +83,10 @@
       <div class="bar d-flex align-items-center justify-content-end">
         <a href="/badges" type="button" class="btn btn-link">Badges</a>
         <a href="/login" type="button" class="btn btn-link">Login</a>
+        <img
+          class="gravatar"
+          src={gravatarUrl($account?.data?.currentAccount?.email)}
+          alt="avatar profile pic" />
       </div>
     {/if}
 

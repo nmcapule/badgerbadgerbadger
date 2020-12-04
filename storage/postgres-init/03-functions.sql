@@ -48,9 +48,11 @@ END;
 $$ LANGUAGE plpgsql strict security definer;
 
 -- Function: Get Current Person
-CREATE FUNCTION api.current_account()
-RETURNS api.accounts AS $$
-    SELECT *
-    FROM api.accounts
-    WHERE id = nullif(current_setting('jwt.claims.account_id', true), '')::integer
+CREATE FUNCTION api.current_account(OUT id int, OUT name text, OUT profile text, OUT email text)
+AS $$
+    SELECT a.*, b.email
+    FROM api.accounts AS a
+    LEFT JOIN api_private.accounts AS b
+        ON a.id = b.id
+    WHERE a.id = nullif(current_setting('jwt.claims.account_id', true), '')::integer
 $$ language sql stable;
