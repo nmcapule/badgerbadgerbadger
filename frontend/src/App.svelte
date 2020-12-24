@@ -17,7 +17,9 @@
   });
 </script>
 
-<style lang="scss">
+<style lang="scss" global>
+  /** Gray 10 theme **/
+  @import 'carbon-components-svelte/css/g10';
 </style>
 
 <Router>

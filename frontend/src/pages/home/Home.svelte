@@ -1,5 +1,6 @@
 <script lang="ts">
   import { navigate } from 'svelte-routing';
+  import { Accordion, AccordionItem } from 'carbon-components-svelte';
 
   import BasicLayout from '../../layouts/basic/BasicLayout.svelte';
   import { createAuthenticator, login } from '../../utils/auth';
@@ -65,53 +66,24 @@
   }
 </style>
 
-<BasicLayout hideHeader={true}>
-  <div slot="title" class="flex-fill">
-    {#if badger}
-      <marquee><span class="clickable" on:click={() => (badger = false)}>🦡🦡🦡</span></marquee>
-    {/if}
-  </div>
-  <div slot="actions">&nbsp;</div>
-
-  <div class="d-flex flex-wrap">
-    <div class="intro-container d-flex flex-column">
-      <div class="big">We uhh... <strong>attach badges to your account</strong>. That's all.</div>
-      <div class="mb-5">
-        You can create badges too if you want. Grant it to others or something.
-      </div>
-      <div class="mt-auto">
-        Like the site?
-        <a href="https://buymeacoffee.com/nmcapule">buymeacoffee.com/nmcapule</a>
-      </div>
-    </div>
-    <div class="login-container d-flex flex-column">
-      <div class="big">Login or Register</div>
-      <form class="d-flex flex-column align-items-end" on:submit={submit}>
-        <div class="form-group align-self-stretch">
-          <input
-            type="email"
-            bind:value={email}
-            class="form-control"
-            placeholder="Enter email"
-            autofocus />
-        </div>
-        <div class="form-group align-self-stretch">
-          <input
-            type="password"
-            bind:value={password}
-            class="form-control"
-            placeholder="Password" />
-        </div>
-        {#if error}
-          <div class="form-group align-self-stretch">
-            <div class="alert alert-danger" role="alert">{error}</div>
-          </div>
-        {/if}
-        <div>
-          <button type="button" class="btn btn-secondary">Register</button>
-          <button type="submit" class="btn btn-primary">Submit</button>
-        </div>
-      </form>
-    </div>
-  </div>
-</BasicLayout>
+<Accordion>
+  <AccordionItem title="Natural Language Classifier">
+    <p>
+      Natural Language Classifier uses advanced natural language processing and machine learning
+      techniques to create custom classification models. Users train their data and the service
+      predicts the appropriate category for the inputted text.
+    </p>
+  </AccordionItem>
+  <AccordionItem title="Natural Language Understanding">
+    <p>
+      Analyze text to extract meta-data from content such as concepts, entities, emotion, relations,
+      sentiment and more.
+    </p>
+  </AccordionItem>
+  <AccordionItem title="Language Translator">
+    <p>
+      Translate text, documents, and websites from one language to another. Create industry or
+      region-specific translations via the service's customization capability.
+    </p>
+  </AccordionItem>
+</Accordion>
