@@ -22,6 +22,10 @@ export async function login(
     context?: Partial<OperationContext>,
   ) => Promise<OperationStore<Mutation, AuthenticateAccountInput>>,
 ) {
+  // Invalidate previous token.
+  localStorage.removeItem(JWT_TOKEN_KEY);
+
+  // Reauthenticate.
   const response = await authenticate({ email, password });
   const token = response.data?.authenticateAccount?.jwtToken;
   if (!token) {
