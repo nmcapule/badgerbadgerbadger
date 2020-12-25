@@ -21,7 +21,7 @@
     BlockFooter,
   } from 'framework7-svelte';
   import cordovaApp from '../js/cordova-app';
-  import routes from '../js/routes';
+  import routes from '../ts/routes';
 
   // Framework7 Parameters
   let f7params = {
@@ -64,7 +64,6 @@
 </script>
 
 <App params={f7params}>
-  <!-- Left panel with cover effect-->
   <Panel left cover themeDark>
     <View>
       <Page>
@@ -74,7 +73,6 @@
     </View>
   </Panel>
 
-  <!-- Right panel with reveal effect-->
   <Panel right reveal themeDark>
     <View>
       <Page>

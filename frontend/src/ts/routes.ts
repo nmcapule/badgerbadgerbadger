@@ -1,8 +1,8 @@
-
 import HomePage from '../pages/home.svelte';
 import AboutPage from '../pages/about.svelte';
 import FormPage from '../pages/form.svelte';
-
+import MasterDetailMasterPage from '../pages/master-detail-master.svelte';
+import MasterDetailDetailPage from '../pages/master-detail-detail.svelte';
 
 import DynamicRoutePage from '../pages/dynamic-route.svelte';
 import RequestAndLoad from '../pages/request-and-load.svelte';
@@ -21,7 +21,17 @@ var routes = [
     path: '/form/',
     component: FormPage,
   },
-
+  {
+    path: '/master-detail/',
+    component: MasterDetailMasterPage,
+    master: true,
+    detailRoutes: [
+      {
+        path: '/master-detail/:id/',
+        component: MasterDetailDetailPage,
+      },
+    ],
+  },
 
   {
     path: '/dynamic-route/blog/:blogId/post/:postId/',
@@ -31,7 +41,7 @@ var routes = [
     path: '/request-and-load/user/:userId/',
     async: function (routeTo, routeFrom, resolve, reject) {
       // Router instance
-      var router = this;
+      var router: any = this;
 
       // App instance
       var app = router.app;
@@ -58,7 +68,7 @@ var routes = [
               title: 'Framework7 Forum',
               url: 'http://forum.framework7.io',
             },
-          ]
+          ],
         };
         // Hide Preloader
         app.preloader.hide();
@@ -71,8 +81,8 @@ var routes = [
           {
             context: {
               user: user,
-            }
-          }
+            },
+          },
         );
       }, 1000);
     },
