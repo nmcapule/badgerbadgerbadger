@@ -6,7 +6,6 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const OptimizeCSSPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserPlugin = require('terser-webpack-plugin');
 
-
 const path = require('path');
 
 function resolvePath(dir) {
@@ -17,11 +16,10 @@ const env = process.env.NODE_ENV || 'development';
 const target = process.env.TARGET || 'web';
 const isCordova = target === 'cordova';
 
-
 module.exports = {
   mode: env,
   entry: {
-    app: './src/js/app.js',
+    app: './src/ts/app.ts',
   },
   output: {
     path: resolvePath(isCordova ? 'cordova/www' : 'www'),
@@ -32,12 +30,11 @@ module.exports = {
     hotUpdateMainFilename: 'hot/hot-update.json',
   },
   resolve: {
-    extensions: ['.mjs', '.js', '.svelte', '.json'],
+    extensions: ['.mjs', '.js', '.ts', '.svelte', '.json'],
     alias: {
-
       '@': resolvePath('src'),
     },
-    mainFields: ['svelte', 'browser', 'module', 'main']
+    mainFields: ['svelte', 'browser', 'module', 'main'],
   },
   devtool: env === 'production' ? 'source-map' : 'eval',
   devServer: {
@@ -52,9 +49,11 @@ module.exports = {
     },
   },
   optimization: {
-    minimizer: [new TerserPlugin({
-      sourceMap: true,
-    })],
+    minimizer: [
+      new TerserPlugin({
+        sourceMap: true,
+      }),
+    ],
   },
   module: {
     rules: [
@@ -65,7 +64,6 @@ module.exports = {
           resolvePath('src'),
           resolvePath('node_modules/framework7'),
 
-
           resolvePath('node_modules/framework7-svelte'),
           resolvePath('node_modules/svelte'),
           resolvePath('node_modules/template7'),
@@ -75,11 +73,18 @@ module.exports = {
       },
 
       {
+        test: /\.tsx?$/,
+        loader: 'ts-loader',
+        options: { appendTsSuffixTo: [/\.svelte$/] },
+      },
+
+      {
         test: /\.svelte$/,
         use: {
           loader: 'svelte-loader',
           options: {
             emitCss: true,
+            preprocess: require('svelte-preprocess')({}),
           },
         },
       },
@@ -87,12 +92,14 @@ module.exports = {
       {
         test: /\.css$/,
         use: [
-          (env === 'development' ? 'style-loader' : {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          }),
+          env === 'development'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../',
+                },
+              },
           'css-loader',
           'postcss-loader',
         ],
@@ -100,12 +107,14 @@ module.exports = {
       {
         test: /\.styl(us)?$/,
         use: [
-          (env === 'development' ? 'style-loader' : {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          }),
+          env === 'development'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../',
+                },
+              },
           'css-loader',
           'postcss-loader',
           'stylus-loader',
@@ -114,12 +123,14 @@ module.exports = {
       {
         test: /\.less$/,
         use: [
-          (env === 'development' ? 'style-loader' : {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          }),
+          env === 'development'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../',
+                },
+              },
           'css-loader',
           'postcss-loader',
           'less-loader',
@@ -128,12 +139,14 @@ module.exports = {
       {
         test: /\.(sa|sc)ss$/,
         use: [
-          (env === 'development' ? 'style-loader' : {
-            loader: MiniCssExtractPlugin.loader,
-            options: {
-              publicPath: '../'
-            }
-          }),
+          env === 'development'
+            ? 'style-loader'
+            : {
+                loader: MiniCssExtractPlugin.loader,
+                options: {
+                  publicPath: '../',
+                },
+              },
           'css-loader',
           'postcss-loader',
           'sass-loader',
@@ -145,7 +158,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: 'images/[name].[ext]',
-
         },
       },
       {
@@ -154,7 +166,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: 'media/[name].[ext]',
-
         },
       },
       {
@@ -163,7 +174,6 @@ module.exports = {
         options: {
           limit: 10000,
           name: 'fonts/[name].[ext]',
-
         },
       },
     ],
@@ -174,31 +184,36 @@ module.exports = {
       'process.env.TARGET': JSON.stringify(target),
     }),
 
-    ...(env === 'production' ? [
-      new OptimizeCSSPlugin({
-        cssProcessorOptions: {
-          safe: true,
-          map: { inline: false },
-        },
-      }),
-      new webpack.optimize.ModuleConcatenationPlugin(),
-    ] : [
-      // Development only plugins
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NamedModulesPlugin(),
-    ]),
+    ...(env === 'production'
+      ? [
+          new OptimizeCSSPlugin({
+            cssProcessorOptions: {
+              safe: true,
+              map: { inline: false },
+            },
+          }),
+          new webpack.optimize.ModuleConcatenationPlugin(),
+        ]
+      : [
+          // Development only plugins
+          new webpack.HotModuleReplacementPlugin(),
+          new webpack.NamedModulesPlugin(),
+        ]),
     new HtmlWebpackPlugin({
       filename: './index.html',
       template: './src/index.html',
       inject: true,
-      minify: env === 'production' ? {
-        collapseWhitespace: true,
-        removeComments: true,
-        removeRedundantAttributes: true,
-        removeScriptTypeAttributes: true,
-        removeStyleLinkTypeAttributes: true,
-        useShortDoctype: true
-      } : false,
+      minify:
+        env === 'production'
+          ? {
+              collapseWhitespace: true,
+              removeComments: true,
+              removeRedundantAttributes: true,
+              removeScriptTypeAttributes: true,
+              removeStyleLinkTypeAttributes: true,
+              useShortDoctype: true,
+            }
+          : false,
     }),
     new MiniCssExtractPlugin({
       filename: 'css/[name].css',
@@ -210,10 +225,7 @@ module.exports = {
           from: resolvePath('src/static'),
           to: resolvePath(isCordova ? 'cordova/www/static' : 'www/static'),
         },
-
       ],
     }),
-
-
   ],
 };
