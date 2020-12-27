@@ -3,7 +3,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { join } from 'path';
 
 import config from './config';
-import { UsersModule } from './users/users.module';
 
 @Module({
   imports: [
@@ -14,7 +13,6 @@ import { UsersModule } from './users/users.module';
       entities: [join(__dirname, '**', '*.entity.{ts,js}')],
       synchronize: true,
     }),
-    UsersModule,
   ],
 })
 export class AppModule {}

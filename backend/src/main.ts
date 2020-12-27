@@ -5,6 +5,7 @@ import { AppModule } from './app.module';
 import config from './config';
 import * as compression from 'compression';
 import postgraphile from 'postgraphile';
+import { run as runGraphileWorker } from 'graphile-worker';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -27,6 +28,10 @@ async function bootstrap() {
   if (config.postgraphile) {
     const { url, schema, options } = config.postgraphile;
     app.use(postgraphile(url, schema, options));
+  }
+
+  if (config.graphileWorker) {
+    runGraphileWorker(config.graphileWorker);
   }
 
   await app.listen(config.api.port);

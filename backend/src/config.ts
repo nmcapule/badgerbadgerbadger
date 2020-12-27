@@ -1,5 +1,6 @@
 import * as dotenv from 'dotenv';
 import { PostGraphileOptions } from 'postgraphile';
+import { RunnerOptions } from 'graphile-worker';
 
 dotenv.config({ path: process.env.NODE_ENV ? `.env.${process.env.NODE_ENV}` : '.env' });
 
@@ -32,4 +33,12 @@ export default {
       enableCors: true,
     } as PostGraphileOptions,
   },
+
+  graphileWorker: {
+    connectionString: process.env.STORAGE_POSTGRES_URL,
+    concurrency: 5,
+    noHandleSignals: false,
+    pollInterval: 1000,
+    taskDirectory: `${__dirname}/tasks`,
+  } as RunnerOptions,
 };

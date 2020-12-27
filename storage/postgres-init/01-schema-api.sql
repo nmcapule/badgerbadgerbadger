@@ -4,22 +4,25 @@ CREATE schema api;
 -- Account
 CREATE TABLE api.accounts (
     id serial PRIMARY KEY,
-    name text NOT NULL DEFAULT 'User',
+    display_name text NOT NULL DEFAULT 'User',
     profile text DEFAULT ''
 );
 -- Badges
 CREATE TABLE api.badges (
     id serial PRIMARY KEY,
-    name text NOT NULL,
+    unique_name text NOT NULL UNIQUE,
+    display_name text NOT NULL,
     description text,
     image_url text,
     fallback_text text
 );
 -- Badge Grants
 CREATE TABLE api.badge_grants (
+    id serial PRIMARY KEY,
     badge_id int NOT NULL REFERENCES api.badges(id),
     granted_by int NOT NULL REFERENCES api.accounts(id),
     granted_to int NOT NULL REFERENCES api.accounts(id),
+    notes text DEFAULT '',
     created timestamp DEFAULT now()
 );
 CREATE INDEX ON api.badge_grants (badge_id);
