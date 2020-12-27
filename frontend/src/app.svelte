@@ -20,18 +20,16 @@
     ListButton,
     BlockFooter,
   } from 'framework7-svelte';
-  import cordovaApp from '../js/cordova-app';
-  import routes from '../ts/routes';
+  import cordovaApp from './js/cordova-app';
+  import routes from './routes';
 
   // Framework7 Parameters
   let f7params = {
     id: 'dev.nmcapule.badger3', // App bundle ID
     name: 'badger3', // App name
     theme: 'auto', // Automatic theme detection
-
     // App routes
     routes: routes,
-
     // Input settings
     input: {
       scrollIntoViewOnFocus: Device.cordova && !Device.electron,
@@ -83,7 +81,7 @@
   </Panel>
 
   <!-- Your main view, should have "view-main" class -->
-  <View main class="safe-areas" url="/" />
+  <View url="/" main class="safe-areas" masterDetailBreakpoint={768} />
 
   <!-- Popup -->
   <Popup id="my-popup">

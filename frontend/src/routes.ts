@@ -1,12 +1,12 @@
-import HomePage from '../pages/home.svelte';
-import AboutPage from '../pages/about.svelte';
-import FormPage from '../pages/form.svelte';
-import MasterDetailMasterPage from '../pages/master-detail-master.svelte';
-import MasterDetailDetailPage from '../pages/master-detail-detail.svelte';
+import HomePage from './pages/home.svelte';
+import AboutPage from './pages/about.svelte';
+import FormPage from './pages/form.svelte';
+import MasterDetailMasterPage from './pages/master-detail-master.svelte';
+import MasterDetailDetailPage from './pages/master-detail-detail.svelte';
 
-import DynamicRoutePage from '../pages/dynamic-route.svelte';
-import RequestAndLoad from '../pages/request-and-load.svelte';
-import NotFoundPage from '../pages/404.svelte';
+import DynamicRoutePage from './pages/dynamic-route.svelte';
+import RequestAndLoad from './pages/request-and-load.svelte';
+import NotFoundPage from './pages/404.svelte';
 
 var routes = [
   {

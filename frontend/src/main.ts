@@ -12,7 +12,7 @@ import '../css/icons.css';
 import '../css/app.scss';
 
 // Import App Component
-import App from '../components/app.svelte';
+import App from './components/app.svelte';
 
 // Init F7 Svelte Plugin
 Framework7.use(Framework7Svelte)

@@ -19,7 +19,7 @@ const isCordova = target === 'cordova';
 module.exports = {
   mode: env,
   entry: {
-    app: './src/ts/app.ts',
+    app: './src/main.ts',
   },
   output: {
     path: resolvePath(isCordova ? 'cordova/www' : 'www'),
